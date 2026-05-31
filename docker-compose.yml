@@ -2,21 +2,21 @@ version: '3.8'
 
 services:
   product-service:
-    build: ./product-service
+    image: adedolapo05/ecommerce-product:latest
     ports:
       - "5001:5001"
 
   cart-service:
-    build: ./cart-service
+    image: adedolapo05/ecommerce-cart:latest
     ports:
       - "5002:5002"
 
   order-service:
-    build: ./order-service
+    image: adedolapo05/ecommerce-order:latest
     ports:
       - "5003:5003"
 
   notification-service:
-    build: ./notification-service
+    image: adedolapo05/ecommerce-notification:latest
     ports:
       - "5004:5004"
