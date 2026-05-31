@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Step 1: Checkout Repo') {
+            steps {
+                echo "Fetching latest manifests from GitHub..."
+                // Pulls the code to get the docker-compose.yml file
+                git branch: 'main', url: 'https://github.com/AdedolapoRaji/ecommerce-microservices.git'
+            }
+        }
+
+        stage('Step 2: Clean Existing Containers') {
+            steps {
+                echo "Stopping any older versions of the app..."
+                // This ensures old container instances are dropped before spinning up new ones
+                sh 'docker compose down --remove-orphans'
+            }
+        }
+
+        stage('Step 3: Docker Compose Deploy') {
+            steps {
+                echo "Launching microservices locally via Docker Compose..."
+                // Launches all 4 containers in detached mode (background)
+                sh 'docker compose up -d'
+            }
+        }
+        
+        stage('Step 4: Verify Deployment') {
+            steps {
+                echo "------ CURRENT RUNNING CONTAINERS ------"
+                sh 'docker ps'
+            }
+        }
+    }
+}
