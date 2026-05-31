@@ -1,0 +1,142 @@
+# ==========================================
+# 1. PRODUCT SERVICE
+# ==========================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ecommerce-product
+  template:
+    metadata:
+      labels:
+        app: ecommerce-product
+    spec:
+      containers:
+      - name: product-container
+        image: adedolapo05/ecommerce-product:latest
+        ports:
+        - containerPort: 5001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: ecommerce-product
+  ports:
+  - port: 80
+    targetPort: 5001
+
+---
+# ==========================================
+# 2. CART SERVICE
+# ==========================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cart-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ecommerce-cart
+  template:
+    metadata:
+      labels:
+        app: ecommerce-cart
+    spec:
+      containers:
+      - name: cart-container
+        image: adedolapo05/ecommerce-cart:latest
+        ports:
+        - containerPort: 5002
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cart-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: ecommerce-cart
+  ports:
+  - port: 80
+    targetPort: 5002
+
+---
+# ==========================================
+# 3. ORDER SERVICE
+# ==========================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ecommerce-order
+  template:
+    metadata:
+      labels:
+        app: ecommerce-order
+    spec:
+      containers:
+      - name: order-container
+        image: adedolapo05/ecommerce-order:latest
+        ports:
+        - containerPort: 5003
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: ecommerce-order
+  ports:
+  - port: 80
+    targetPort: 5003
+
+---
+# ==========================================
+# 4. NOTIFICATION SERVICE
+# ==========================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ecommerce-notification
+  template:
+    metadata:
+      labels:
+        app: ecommerce-notification
+    spec:
+      containers:
+      - name: notification-container
+        image: adedolapo05/ecommerce-notification:latest
+        ports:
+        - containerPort: 5004
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: ecommerce-notification
+  ports:
+  - port: 80
+    targetPort: 5004
