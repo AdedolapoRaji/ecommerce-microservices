@@ -13,16 +13,16 @@ pipeline {
         stage('Step 2: Clean Existing Containers') {
             steps {
                 echo "Stopping any older versions of the app..."
-                // This ensures old container instances are dropped before spinning up new ones
-                sh 'docker compose down --remove-orphans'
+                // Using the hyphenated syntax ensures compatibility on your node
+                sh 'docker-compose down'
             }
         }
 
         stage('Step 3: Docker Compose Deploy') {
             steps {
                 echo "Launching microservices locally via Docker Compose..."
-                // Launches all 4 containers in detached mode (background)
-                sh 'docker compose up -d'
+                // Launches all 4 containers in detached mode using hyphenated syntax
+                sh 'docker-compose up -d'
             }
         }
         
