@@ -5,7 +5,6 @@ pipeline {
         stage('Step 1: Checkout Repo') {
             steps {
                 echo "Fetching latest manifests from GitHub..."
-                // Pulls the code to get the docker-compose.yml file
                 git branch: 'main', url: 'https://github.com/AdedolapoRaji/ecommerce-microservices.git'
             }
         }
@@ -13,20 +12,26 @@ pipeline {
         stage('Step 2: Clean Existing Containers') {
             steps {
                 echo "Stopping any older versions of the app..."
-                // Using the hyphenated syntax ensures compatibility on your node
                 sh 'docker-compose down'
             }
         }
 
-        stage('Step 3: Docker Compose Deploy') {
+        stage('Step 3: Pull Newest Images') {
+            steps {
+                echo "Pulling fresh images from Docker Hub..."
+                // This ensures we get the latest images you pushed from pipeline #1
+                sh 'docker-compose pull'
+            }
+        }
+
+        stage('Step 4: Docker Compose Deploy') {
             steps {
                 echo "Launching microservices locally via Docker Compose..."
-                // Launches all 4 containers in detached mode using hyphenated syntax
                 sh 'docker-compose up -d'
             }
         }
         
-        stage('Step 4: Verify Deployment') {
+        stage('Step 5: Verify Deployment') {
             steps {
                 echo "------ CURRENT RUNNING CONTAINERS ------"
                 sh 'docker ps'
