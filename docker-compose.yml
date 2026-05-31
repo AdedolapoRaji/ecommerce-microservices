@@ -20,3 +20,11 @@ services:
     image: adedolapo05/ecommerce-notification:latest
     ports:
       - "5004:5004"
+
+  # New Frontend Dashboard Service
+  frontend-service:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html
